@@ -1,6 +1,11 @@
-class Api::V1::UsersController < ApplicationController
+class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
+  def parse(user_params)
+    @row = User.where(id: params[:id])
+    Parse.new.process(@row)
+    render json: @row
+  end
   # GET /users
   def index
     @users = User.all
